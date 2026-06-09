@@ -69,7 +69,7 @@
     margin: 5px 0;
 }
 
-#Preformace {
+#performance {
     font-size: 3rem;
     font-weight: bold;
     margin-top: 10px;
@@ -114,6 +114,4 @@
     border-radius: 100%;
 }
 
-#Preformace {
-    /* Kept intentionally empty to override or we can just remove it */
-}
+

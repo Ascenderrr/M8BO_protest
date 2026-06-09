@@ -1,4 +1,4 @@
-﻿const perfText = document.getElementById("Preformace");
+﻿const perfText = document.getElementById("performance");
 const hitZone = document.getElementById("time");
 const scoreText = document.getElementById("scoreText");
 const comboText = document.getElementById("comboText");
@@ -20,6 +20,15 @@ const MIN_BASE_SPAWN_TIME = 350; // Fastest they will ever spawn
 
 let blockSpeed = 8; // Starting move speed
 const MAX_BLOCK_SPEED = 18; // Maximum move speed
+
+function handleMiss() {
+    combo = 0;
+    comboText.innerText = `Combo: x0`;
+    perfText.innerText = "Miss!";
+    perfText.style.color = "red";
+    hitZone.classList.add("miss-anim");
+    setTimeout(() => hitZone.classList.remove("miss-anim"), 150);
+}
 
 // --- CONTROLS ---
 document.addEventListener('keydown', e => {
@@ -66,11 +75,7 @@ document.addEventListener('keydown', e => {
             hitZone.classList.add("hit-anim");
             setTimeout(() => hitZone.classList.remove("hit-anim"), 150);
         } else {
-            combo = 0; // Reset combo on miss
-            comboText.innerText = `Combo: 0`;
-
-            hitZone.classList.add("miss-anim");
-            setTimeout(() => hitZone.classList.remove("miss-anim"), 150);
+            handleMiss();
         }
 
         b.element.remove();
@@ -78,7 +83,13 @@ document.addEventListener('keydown', e => {
 });
 
 document.addEventListener('keyup', e => {
-    if (e.key.toLowerCase() === 'f') setTimeout(() => perfText.innerText = "", 500);
+    if (e.key.toLowerCase() === 'f') {
+        setTimeout(() => {
+            if (perfText.innerText === "Hit!" || perfText.innerText === "Miss!") {
+                perfText.innerText = "";
+            }
+        }, 500);
+    }
 });
 
 // --- GAME LOOP & SPAWNER ---
@@ -90,18 +101,8 @@ function gameLoop() {
         
         if (b.x < -200) {
             b.element.remove();
-            perfText.innerText = "Miss!";
-            perfText.style.color = "red";
-            
-            // Reset combo on passed block
-            combo = 0;
-            comboText.innerText = `Combo: 0`;
-            
-            // Flash red on miss
-            hitZone.classList.add("miss-anim");
-            setTimeout(() => hitZone.classList.remove("miss-anim"), 150);
-
-            return false; // Deletes from list
+            handleMiss();
+            return false;
         }
         return true; // Keeps in list
     });
