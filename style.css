@@ -1,8 +1,9 @@
 body {
     margin: 0;
     overflow: hidden;
-    background-color: #222;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f1a 100%);
     color: white;
+    min-height: 100vh;
 }
 
 #startScreen {
@@ -24,11 +25,15 @@ body {
 #startScreen h1 {
     font-size: 5rem;
     margin: 0 0 20px 0;
-    text-shadow: 0 0 20px red;
+    text-shadow: 0 0 20px red, 0 0 40px rgba(255, 0, 0, 0.3);
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 0.05em;
 }
 
 #startScreen p {
     font-size: 2rem;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
 }
 
 #startScreenStats {
@@ -46,24 +51,6 @@ body {
     margin-bottom: 15px;
     color: grey;
     text-shadow: none;
-}
-
-@keyframes spinClockwise {
-    from {
-        transform: translateY(-50%) rotate(0deg);
-    }
-    to {
-        transform: translateY(-50%) rotate(360deg);
-    }
-}
-
-@keyframes spinCounterClockwise {
-    from {
-        transform: translateY(-50%) rotate(0deg);
-    }
-    to {
-        transform: translateY(-50%) rotate(-360deg);
-    }
 }
 
 .hidden {
@@ -88,21 +75,22 @@ body {
     top: 20px;
     width: 100%;
     text-align: center;
-    font-family: Arial, sans-serif;
+    font-family: 'Oswald', sans-serif;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 #scoreText, #comboText {
     font-size: 2rem;
-    font-weight: bold;
+    font-weight: 600;
     margin: 5px 0;
 }
 
 #Preformace {
     font-size: 3rem;
-    font-weight: bold;
+    font-weight: 600;
     margin-top: 10px;
     text-transform: uppercase;
+    font-family: 'Oswald', sans-serif;
 }
 
 #healthContainer {
@@ -131,8 +119,8 @@ body {
 }
 
 #time {
-    background-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5), inset 0 0 15px rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.15);
     height: 150px;
     width: 150px;
     position: fixed;
@@ -140,7 +128,35 @@ body {
     left: 100px;
     transform: translateY(-50%);
     border-radius: 100%;
+    border: 2px solid rgba(255, 255, 255, 0.15);
     transition: transform 0.1s ease, border-color 0.1s ease, box-shadow 0.1s ease;
+    will-change: transform;
+}
+
+#time::after {
+    content: '';
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    right: -4px;
+    bottom: -4px;
+    border-radius: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    pointer-events: none;
+}
+
+#time.hit-anim {
+    transform: translateY(-50%) scale(1.2);
+    border-color: #00ffcc;
+    box-shadow: 0 0 30px #00ffcc, inset 0 0 30px #00ffcc;
+    border-width: 2px;
+}
+
+#time.miss-anim {
+    transform: translateY(-50%) scale(0.9);
+    border-color: #ff3333;
+    box-shadow: 0 0 30px #ff3333, inset 0 0 30px #ff3333;
+    border-width: 2px;
 }
 
 #Richepicdudebro99{
@@ -153,16 +169,44 @@ body {
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
-#time.hit-anim {
-    transform: translateY(-50%) scale(1.2);
-    border-color: #00ffcc;
-    box-shadow: 0 0 30px #00ffcc, inset 0 0 30px #00ffcc;
-}
 
-#time.miss-anim {
-    transform: translateY(-50%) scale(0.9);
-    border-color: #ff3333;
-    box-shadow: 0 0 30px #ff3333, inset 0 0 30px #ff3333;
+@media (max-width: 600px) {
+    #startScreen h1 {
+        font-size: 3rem;
+    }
+    #startScreen p {
+        font-size: 1.3rem;
+    }
+    #startScreenStats {
+        font-size: 1rem;
+    }
+    #scoreText, #comboText {
+        font-size: 1.3rem;
+    }
+    #time {
+        width: 100px;
+        height: 100px;
+        left: 50px;
+    }
+    #Richepicdudebro99 {
+        height: 110px;
+        width: 110px;
+    }
+    .block {
+        width: 100px;
+        height: 100px;
+        contain: layout style;
+    }
+    #healthContainer {
+        width: 280px;
+    }
+    .healthBlock {
+        width: 20px;
+        height: 20px;
+    }
+    #Preformace {
+        font-size: 2rem;
+    }
 }
 
 .block {
@@ -171,8 +215,9 @@ body {
     background-color: transparent;
     border: none;
     position: absolute;
-    top: 80%;   
-    transform: translateY(-50%);
+    top: 80%;
+    will-change: transform;
     border-radius: 100%;
     overflow: hidden;
+    contain: layout style;
 }
