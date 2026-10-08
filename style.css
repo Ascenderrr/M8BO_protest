@@ -1,9 +1,8 @@
 body {
     margin: 0;
     overflow: hidden;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f1a 100%);
+    background-color: #222;
     color: white;
-    min-height: 100vh;
 }
 
 #startScreen {
@@ -53,6 +52,24 @@ body {
     text-shadow: none;
 }
 
+@keyframes spinClockwise {
+    from {
+        transform: translateY(-50%) rotate(0deg);
+    }
+    to {
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
+
+@keyframes spinCounterClockwise {
+    from {
+        transform: translateY(-50%) rotate(0deg);
+    }
+    to {
+        transform: translateY(-50%) rotate(-360deg);
+    }
+}
+
 .hidden {
     opacity: 0;
     pointer-events: none;
@@ -60,10 +77,13 @@ body {
 
 #bg-video {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
     object-fit: cover;
 }
 
@@ -127,7 +147,6 @@ body {
     border-radius: 100%;
     border: 2px solid rgba(255, 255, 255, 0.15);
     transition: transform 0.1s ease, border-color 0.1s ease, box-shadow 0.1s ease;
-    will-change: transform;
 }
 
 #time::after {
@@ -192,7 +211,6 @@ body {
     .block {
         width: 100px;
         height: 100px;
-        contain: layout style;
     }
     #healthContainer {
         width: 280px;
@@ -212,9 +230,8 @@ body {
     background-color: transparent;
     border: none;
     position: absolute;
-    top: 80%;
-    will-change: transform;
+    top: 80%;   
+    transform: translateY(-50%);
     border-radius: 100%;
     overflow: hidden;
-    contain: layout style;
 }
